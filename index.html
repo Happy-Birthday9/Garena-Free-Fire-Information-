@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Free Fire UID Info</title>
+  <meta name="description" content="Free Fire UID information dashboard">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="topbar">
+    <div class="brand"><span class="logo">🔥</span><div><b>Free Fire UID Info</b><small>Player Intelligence Dashboard</small></div></div>
+    <button id="settingsBtn" class="iconBtn" title="Settings">⚙️</button>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <div>
+        <span class="pill">⚡ FAST LOOKUP</span>
+        <h1>Free Fire Player Information</h1>
+        <p>UID দিয়ে player profile, rank, guild, pet, equipped items এবং API থেকে পাওয়া অন্যান্য তথ্য দেখুন।</p>
+      </div>
+      <div class="searchBox">
+        <input id="uidInput" inputmode="numeric" maxlength="12" placeholder="Enter 10–12 digit UID">
+        <button id="searchBtn">🔍 Search</button>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="result">📊 Result</button>
+      <button class="tab" data-tab="favorites">⭐ Favorites <span id="favCount"></span></button>
+      <button class="tab" data-tab="history">📋 History</button>
+      <button class="tab" data-tab="stats">📈 Stats</button>
+    </nav>
+
+    <section id="resultTab" class="tabPanel">
+      <div id="resultEmpty" class="empty card">
+        <div class="emptyIcon">🎮</div><h2>Search a player</h2>
+        <p>উপরের ঘরে Free Fire UID লিখে Search চাপুন।</p>
+      </div>
+      <div id="result" class="hidden"></div>
+    </section>
+
+    <section id="favoritesTab" class="tabPanel hidden">
+      <div class="sectionHead"><h2>⭐ Favorites</h2><button id="clearFav" class="dangerBtn">Clear all</button></div>
+      <div id="favoritesList"></div>
+    </section>
+
+    <section id="historyTab" class="tabPanel hidden">
+      <div class="sectionHead"><h2>📋 Search History</h2><button id="clearHistory" class="dangerBtn">Clear all</button></div>
+      <div id="historyList"></div>
+    </section>
+
+    <section id="statsTab" class="tabPanel hidden">
+      <div class="sectionHead"><h2>📈 Your Stats</h2></div>
+      <div id="statsGrid" class="statsGrid"></div>
+    </section>
+
+    <section class="infoGrid">
+      <article class="card info"><b>🔐 Privacy</b><p>Favorites ও history এই browser-এর local storage-এ রাখা হয়।</p></article>
+      <article class="card info"><b>⚠️ Important</b><p>GitHub Pages PHP execute করে না। নিচের backend note পড়ুন।</p></article>
+      <article class="card info"><b>🧩 API</b><p>API URL/key Settings থেকে configure করা যাবে।</p></article>
+    </section>
+  </main>
+
+  <dialog id="settings">
+    <form method="dialog" class="modal">
+      <div class="modalHead"><h2>⚙️ API Settings</h2><button value="cancel" class="close">✕</button></div>
+      <label>API URL<input id="apiUrl" placeholder="https://api.gameskinbo.com/ff-info/get"></label>
+      <label>API Key<input id="apiKey" type="password" placeholder="x-api-key (optional)"></label>
+      <label>Request parameter<input id="paramName" value="uid"></label>
+      <p class="warning">⚠️ GitHub Pages-এ API key রাখা হলে সেটি visitor-এর browser-এ দেখা যেতে পারে। Production-এ server-side proxy ব্যবহার করুন।</p>
+      <div class="modalActions"><button value="cancel" class="secondary">Cancel</button><button id="saveSettings" value="default" class="primary">Save</button></div>
+    </form>
+  </dialog>
+
+  <template id="playerTemplate">
+    <article class="player card">
+      <div class="playerHead">
+        <div><span class="pill">PLAYER FOUND</span><h2 id="playerName">Unknown</h2><code id="playerUid"></code></div>
+        <div class="actions"><button id="refresh" class="secondary">🔄 Refresh</button><button id="favorite" class="primary">⭐ Favorite</button><button id="copyJson" class="secondary">📋 Copy JSON</button></div>
+      </div>
+      <div id="sections" class="sections"></div>
+      <details class="raw"><summary>View raw API JSON</summary><pre id="rawJson"></pre></details>
+    </article>
+  </template>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
